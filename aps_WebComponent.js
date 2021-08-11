@@ -27,20 +27,20 @@
 			this.dispatchEvent(new CustomEvent("propertiesChanged", {
 					detail: {
 						properties: {
-							widgetText: this.widgetText
+							// widgetText: this.widgetText
 						}
 					}
 			}));
 		}
 
-		set widgetText(newText) {
-			this._shadowRoot.getElementById("aps_text").value = newText;
-		}
+		// set widgetText(newText) {
+		// 	this._shadowRoot.getElementById("aps_text").value = newText;
+		// }
 
-		get widgetText() {
-			return this._shadowRoot.getElementById("aps_text").value;
-		}
+		// get widgetText() {
+		// 	return this._shadowRoot.getElementById("aps_text").value;
+		// }
 	}
 
-customElements.define("com-promos-is-helloworld-aps-step5", HelloWorldAps);
+customElements.define("com-openpromos-sac-pdf-vidget-aps", PDFViewer);
 })();
