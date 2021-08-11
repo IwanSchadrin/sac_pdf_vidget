@@ -144,6 +144,8 @@
                 return Controller.extend("myView.Template", {
 
                     onInit: function () {
+                        var sDummy = _that,
+                            sDummy2 = that;
                         // if (that._firstConnection === 0) {
                         //     that._firstConnection = 1;
                         //     this._sValidPath = that._export_settings.pdf_url
@@ -193,7 +195,7 @@
 
                         jQuery.sap.addUrlWhitelist("https", "schrader.promos-consult.de");
                         this._oPDFViewer.setSource(this._getPdfSource());
-                        
+
                         this._oPDFViewer.setTitle("My Custom Document");
                         this._oPDFViewer.open();
                         this._setForPopup();
