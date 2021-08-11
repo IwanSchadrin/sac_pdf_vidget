@@ -92,25 +92,22 @@
         }
         */
 
-        //Getters and Setters
-        get widgetText() {
-            return this._tagText;
-        }
 
-        set widgetText(value) {
-            this._tagText = value;
-        }
+        set pdfUrl(newPdfUrl) {
+			this._pdfUrl = newPdfUrl;
+		}
 
-        //Getters and Setters
-        get headingType() {
-            return this._tagType;
-        }
+		get pdfUrl() {
+			return this._pdfUrl;
+		}
 
-        set headingType(value) {
-            this._tagType = value;
-        }
+		set popupTitle(newPopupTitle) {
+			this._popupTitle = newPopupTitle;
+		}
 
-     
+		get popupTitle() {
+			return this._popupTitle;
+		}
 
     });
 
@@ -183,7 +180,19 @@
                     },
 
                     _getPdfSource: function(){
-                        return "https://schrader.promos-consult.de:8408/sap/opu/odata/prohan/WFS4_SRV/ArchiveLinkDocuments(ProcessId=guid'e22155d5-7207-1eeb-bea0-607b6c761ffe',AttachKey='ARCHIVELINK%20DOCUMENT%2FPROMOS%2FTPE22155D572071EEBBEA0607B6C761FFE%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20T9E22155D572071EDBBEBE4F91EA1EFDF7')/$value";
+                        var sPdfSource = this._oSACPDFViewerComponent.pdfUrl;
+                        if (!sPdfSource){
+                            sPdfSource = "https://schrader.promos-consult.de:8408/sap/opu/odata/prohan/WFS4_SRV/ArchiveLinkDocuments(ProcessId=guid'e22155d5-7207-1eeb-bea0-607b6c761ffe',AttachKey='ARCHIVELINK%20DOCUMENT%2FPROMOS%2FTPE22155D572071EEBBEA0607B6C761FFE%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20T9E22155D572071EDBBEBE4F91EA1EFDF7')/$value";
+                        }
+                        return sPdfSource;
+                    },
+                    
+                    _getPopupTitle: function(){
+                        var sPopupTitle = this._oSACPDFViewerComponent.popupTitle;
+                        if (!sPopupTitle){
+                            sPopupTitle = "KPI Steckbrief";                            
+                        }
+                        return sPopupTitle;
                     },
 
                     dipslayPDFPopup: function(){
@@ -195,9 +204,9 @@
                         jQuery.sap.addUrlWhitelist("https", "schrader.promos-consult.de");
                         this._oPDFViewer.setSource(this._getPdfSource());
 
-                        this._oPDFViewer.setTitle("My Custom Document");
+                        this._oPDFViewer.setTitle(this._getPopupTitle());
                         this._oPDFViewer.open();
-                        this._setForPopup();
+                        // this._setForPopup();
                     }, 
 
                     onPDFSourceValidationFailed: function(oEvent){
