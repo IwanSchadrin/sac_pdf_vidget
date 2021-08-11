@@ -122,10 +122,11 @@
         var that_ = that;
         this._firstConnection = false;
 
-        let content = document.createElement('div');
-        content.slot = "content";
-        that_.appendChild(content);
-
+        if (that_.children.length === 0){
+            let content = document.createElement('div');
+            content.slot = "content";
+            that_.appendChild(content);
+        }
 
         // that_._renderExportButton();
 
