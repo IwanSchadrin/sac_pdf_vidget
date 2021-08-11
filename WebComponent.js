@@ -133,8 +133,8 @@
             }
 
             this._oContent = document.createElement('div');
-            content.slot = "content";
-            that_.appendChild(content);
+            this._oContent.slot = "content";
+            that_.appendChild(this._oContent);
 
 
             sap.ui.getCore().attachInit(function () {
