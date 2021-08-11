@@ -12,14 +12,14 @@
 		{
 			"kind": "main",
 			"tag": "com-openpromos-sac-pdf-vidget",
-			"url": "https://iwanschadrin.github.io/sac_custom_widget_hw/WebComponent.js",
+			"url": "https://iwanschadrin.github.io/sac_pdf_vidget/WebComponent.js",
 			"integrity": "",
 			"ignoreIntegrity": true
 		},
 		{
 			"kind": "styling",
 			"tag": "com-openpromos-sac-pdf-vidget-aps",
-			"url": "https://iwanschadrin.github.io/sac_custom_widget_hw/aps_WebComponent.js",
+			"url": "https://iwanschadrin.github.io/sac_pdf_vidget/aps_WebComponent.js",
 			"integrity": "",
 			"ignoreIntegrity": true
 		}
@@ -34,10 +34,30 @@
 			"type": "string",
 			"description": "Title",
 			"default": "Steckbrief"
+		},		
+		"displayLink": {
+			"type": "boolean",
+			"description": "Display Link",
+			"default": true
 		}
 	},
 	"methods": {
-
+		"getDisplayLink": {
+			"description": "Returns true if the link for popup should be visible",
+			"body": "return this.displayLink;",
+			"returnType": "boolean"
+		},
+		"setDisplayLink": {
+			"description": "Defines if the link for popup should be visible. If invisible, use the displayPDFInPopup method in custom script.",
+			"parameters": [
+				{
+					"name": "displayLink",
+					"type": "boolean",
+					"description": "True if the link should be visible"
+				}
+			],
+			"body": "this.displayLink = displayLink;"
+		},
 		"getPdfUrl": {
 			"description": "Returns the URL of the PDF file",
 			"body": "return this.pdfUrl;",
@@ -69,6 +89,10 @@
 			"description": "Returns the title of the popup-window in that the PDF file will be displayed",			
 			"body": "return this.popupTitle;",
 			"returnType": "string"
+		},
+
+		"displayPDFInPopup": {
+			"description": "Displays the pop-up window"
 		}
 	},
 	"events": {
