@@ -61,7 +61,8 @@
         connectedCallback() {
             this._firstConnection = true;
 
-            loadthis(this);
+            //loadthis(this);
+            this.redraw();
         }
 
         //Fired when the widget is removed from the html DOM of the page (e.g. by hide)
@@ -83,7 +84,8 @@
                 this._pdfUrl = oChangedProperties.pdfUrl;
             }
             if (this._firstConnection) {
-                loadthis(this);
+                //loadthis(this);
+                this.redraw();
             }
         }
 
@@ -124,7 +126,7 @@
         }
 
         redraw() {
-            var that_ = that;
+            var that_ = this;
 
             if (this._oContent) {
                 this._oContent.parentNode.removeChild(this._oContent);
@@ -153,8 +155,8 @@
                     return Controller.extend("myView.Template", {
 
                         onInit: function () {
-                            this._oSACPDFViewerComponent = that;
-                            that._oViewController = this;
+                            this._oSACPDFViewerComponent = that_;
+                            that_._oViewController = this;
                             // if (that._firstConnection === 0) {
                             //     that._firstConnection = 1;
                             //     this._sValidPath = that._export_settings.pdf_url
