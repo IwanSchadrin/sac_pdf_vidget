@@ -13,10 +13,16 @@
 						<td>Pop-Up Title</td>						
 						<td><input id="popupTitle" type="string"></td>
 					</tr>
+					<tr>
+						<td><label for="displayLink">DisplayLink</label></td>			
+						<td><input id="displayLink" type="checkbox"></td>
+					</tr>					
 				</table>
 			</fieldset>
 		</form>
 	`;
+
+	//displayLink
 	
 	class PDFViewerAps extends HTMLElement {
 		constructor() {
@@ -32,10 +38,19 @@
 				detail: {
 					properties: {
 						pdfUrl: this.pdfUrl,
-						popupTitle: this.popupTitle
+						popupTitle: this.popupTitle,
+						displayLink: this.displayLink
 					}
 				}
 			}));
+		}
+
+		set displayLink(bDisplay) {
+			this._shadowRoot.getElementById("displayLink").value = bDisplay;
+		}
+
+		get displayLink() {
+			return this._shadowRoot.getElementById("displayLink").value;
 		}
 
 		set pdfUrl(newPdfUrl) {
