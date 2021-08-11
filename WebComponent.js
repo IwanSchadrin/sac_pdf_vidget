@@ -136,8 +136,9 @@
                 "sap/ui/model/json/JSONModel",
                 "sap/m/MessageToast",
                 "sap/ui/core/library",
-                "sap/ui/core/Core"
-            ], function (jQuery, Controller, JSONModel, MessageToast, coreLibrary, Core) {
+                "sap/ui/core/Core",
+                "sap/m/PDFViewer"
+            ], function (jQuery, Controller, JSONModel, MessageToast, coreLibrary, Core, PDFViewer) {
                 "use strict";
 
                 return Controller.extend("myView.Template", {
@@ -172,10 +173,33 @@
 
                     onShowPopupLinkPress: function(){
                         MessageToast.show("It works...");
+                        this.dipslayPDFPopup();
                     },
 
                     onsourceValidationFailed: function (oEvent) {
                         console.log("onsourceValidationFailed");
+                        oEvent.preventDefault();
+                    },
+
+                    _getPdfSource: function(){
+                        return "https://schrader.promos-consult.de:8408/sap/opu/odata/prohan/WFS4_SRV/ArchiveLinkDocuments(ProcessId=guid'e22155d5-7207-1eeb-bea0-607b6c761ffe',AttachKey='ARCHIVELINK%20DOCUMENT%2FPROMOS%2FTPE22155D572071EEBBEA0607B6C761FFE%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20T9E22155D572071EDBBEBE4F91EA1EFDF7')/$value";
+                    },
+
+                    dipslayPDFPopup: function(){
+                        if (!this._oPDFViewer){
+                            this._oPDFViewer = new PDFViewer();
+                            this._oPDFViewer.attachSourceValidationFailed(this.onPDFSourceValidationFailed, this);
+                        }
+
+                        jQuery.sap.addUrlWhitelist("https", "schrader.promos-consult.de");
+                        this._oPDFViewer.setSource(this._getPdfSource());
+                        
+                        this._oPDFViewer.setTitle("My Custom Document");
+                        this._oPDFViewer.open();
+                        this._setForPopup();
+                    }, 
+
+                    onPDFSourceValidationFailed: function(oEvent){
                         oEvent.preventDefault();
                     }
                 });
