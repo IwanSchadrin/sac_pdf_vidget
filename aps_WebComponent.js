@@ -10,14 +10,15 @@
 						<td><input id="pdfUrl" type="string"></td>
 					</tr>
 					<tr>
-						<td>Pop-Up Title</td>
-						<td><input id="popupTitle" type="string"></td>
+						<td>Pop-Up Title</td>						
+						<td><textarea id="popupTitle" rows="5" cols="33"></td>
 					</tr>
 				</table>
 			</fieldset>
 		</form>
 	`;
 
+	//<td><input id="popupTitle" type="string"></td>
 	class PDFViewerAps extends HTMLElement {
 		constructor() {
 			super();
