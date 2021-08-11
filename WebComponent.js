@@ -76,6 +76,13 @@
         onCustomWidgetAfterUpdate(oChangedProperties) {
             if (this._firstConnection) {
                 loadthis(this);
+            } else {
+                if (oChangedProperties.hasOwnProperty("popupTitle")){
+                    this._popupTitle = oChangedProperties.popupTitle;
+                }
+                if (oChangedProperties.hasOwnProperty("pdfUrl")){
+                    this._pdfUrl = oChangedProperties.pdfUrl;
+                }
             }
         }
 
