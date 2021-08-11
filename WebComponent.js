@@ -217,7 +217,7 @@
                         var sPdfSource = this._getPdfSource();
                         if (sPdfSource){
                             var oPdfSourceUrl = new URL(sPdfSource);
-                            jQuery.sap.addUrlWhitelist(oPdfSourceUrl.protocol, oPdfSourceUrl.hostname);
+                            jQuery.sap.addUrlWhitelist(oPdfSourceUrl.protocol.replace(":",""), oPdfSourceUrl.hostname);
                             this._oPDFViewer.setSource(sPdfSource);
 
                             this._oPDFViewer.setTitle(this._getPopupTitle());
