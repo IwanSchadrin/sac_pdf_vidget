@@ -16,7 +16,7 @@
               xmlns:mvc="sap.ui.core.mvc"
               xmlns="sap.m"
               height="100%">                      
-                      <Link text="Show popup" press=".onShowPopupLinkPress"/>  
+                      <Link id="linkDisplayPopup" text="Show popup" press=".onShowPopupLinkPress"/>  
           </mvc:View>
       </script>  
     `;
@@ -34,42 +34,21 @@
 
             _shadowRoot.querySelector("#oView").id = _id + "_oView";
 
-
-            // this._export_settings = {};
-            // this._export_settings.pdf_url = "";
-            // this._export_settings.title = "";
-            // this._export_settings.height = "";
-
-            // this.settings = {};
-            // this.settings.format = "";
-
-            // this.addEventListener("click", event => {
-            //     console.log('click');
-            //     this.dispatchEvent(new CustomEvent("onStart", {
-            //         detail: {    
-            //             settings: this.settings
-            //         }
-            //     }));
-            // });
-
             this._firstConnection = 0;
         }
 
         //Fired when the widget is added to the html DOM of the page
         connectedCallback() {
             this._firstConnection = true;
-
             loadthis(this);
         }
 
         //Fired when the widget is removed from the html DOM of the page (e.g. by hide)
         disconnectedCallback() {
-
         }
 
         //When the custom widget is updated, the Custom Widget SDK framework executes this function first
         onCustomWidgetBeforeUpdate(oChangedProperties) {
-
         }
 
         //When the custom widget is updated, the Custom Widget SDK framework executes this function after the update
@@ -79,6 +58,9 @@
             }
             if (oChangedProperties.hasOwnProperty("pdfUrl")) {
                 this._pdfUrl = oChangedProperties.pdfUrl;
+            }
+            if (oChangedProperties.hasOwnProperty("displayLink")) {
+                this._displayLink = oChangedProperties.displayLink;
             }
             if (this._firstConnection) {
                 loadthis(this);
@@ -120,6 +102,14 @@
             return this._popupTitle;
         }
 
+        set displayLink(bDisplayLink) {
+            this._displayLink = bDisplayLink;
+        }
+
+        get displayLink() {
+            return this._displayLink;
+        }
+
     });
 
     // UTILS
@@ -158,41 +148,29 @@
 
                     onInit: function () {
                         this._oSACPDFViewerComponent = that;
-                        that._oPdfController = this;
-                        // if (that._firstConnection === 0) {
-                        //     that._firstConnection = 1;
-                        //     this._sValidPath = that._export_settings.pdf_url
-                        //     console.log(this._sValidPath);
-
-                        //     this._oModel = new JSONModel({
-                        //         Source: this._sValidPath,
-                        //         Title: that._export_settings.title,
-                        //         Height: that._export_settings.height
-                        //     });
-
-                        //     this.getView().setModel(this._oModel);
-                        //     sap.ui.getCore().setModel(this._oModel, "core");
-                        // } else {
-                        //     var oModel = sap.ui.getCore().getModel("core");
-                        //     oModel.setProperty("/Source", that._export_settings.pdf_url);
-                        // }
+                        that._oPdfController = this;   
+                        
+                        this._oDisplayPopupLink = this.getView().byId("linkDisplayPopup");
                     },
 
-                    onloaded: function () {
-                        console.log("onloaded");
+                    onBeforeRendering: function(){
+                        if (this._oDisplayPopupLink && this._oSACPDFViewerComponent){
+                            var bDisplayLink = (this._oSACPDFViewerComponent._displayLink ? true : false );
+                            this._oDisplayPopupLink.setVisible(bDisplayLink);
+                        }
                     },
 
-                    onerror: function () {
-                        console.log("onerror");
+                    onloaded: function () {                        
                     },
 
-                    onShowPopupLinkPress: function () {
-                        MessageToast.show("It works...");
+                    onerror: function () {                        
+                    },
+
+                    onShowPopupLinkPress: function () {                        
                         this.dipslayPDFPopup();
                     },
 
-                    onsourceValidationFailed: function (oEvent) {
-                        console.log("onsourceValidationFailed");
+                    onsourceValidationFailed: function (oEvent) {                        
                         oEvent.preventDefault();
                     },
 
