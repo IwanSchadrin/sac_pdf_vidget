@@ -98,6 +98,11 @@
         }
         */
 
+        displayPDFInPopup(){
+            if (this._oPdfController){
+                this._oPdfController.dipslayPDFPopup();
+            }
+        }
 
         set pdfUrl(newPdfUrl) {
             this._pdfUrl = newPdfUrl;
