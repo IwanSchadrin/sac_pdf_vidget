@@ -4,7 +4,7 @@
         
     `;
 
-    customElements.define('com-promos-is-helloworld-step5', class HelloWorld extends HTMLElement {
+    customElements.define('com-openpromos-sac-pdf-vidget', class PDFViewer extends HTMLElement {
         constructor() {
             super();
             this._shadowRoot = this.attachShadow({ mode: "open" });
