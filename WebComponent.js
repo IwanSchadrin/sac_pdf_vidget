@@ -213,12 +213,16 @@
                             this._oPDFViewer.attachSourceValidationFailed(this.onPDFSourceValidationFailed, this);
                         }
 
-                        jQuery.sap.addUrlWhitelist("https", "schrader.promos-consult.de");
-                        this._oPDFViewer.setSource(this._getPdfSource());
+                        
+                        var sPdfSource = this._getPdfSource();
+                        if (sPdfSource){
+                            var oPdfSourceUrl = new URL(sPdfSource);
+                            jQuery.sap.addUrlWhitelist(oPdfSourceUrl.protocol, oPdfSourceUrl.hostname);
+                            this._oPDFViewer.setSource(sPdfSource);
 
-                        this._oPDFViewer.setTitle(this._getPopupTitle());
-                        this._oPDFViewer.open();
-                        // this._setForPopup();
+                            this._oPDFViewer.setTitle(this._getPopupTitle());
+                            this._oPDFViewer.open();
+                        }
                     },
 
                     onPDFSourceValidationFailed: function (oEvent) {
