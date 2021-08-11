@@ -74,10 +74,10 @@
 
         //When the custom widget is updated, the Custom Widget SDK framework executes this function after the update
         onCustomWidgetAfterUpdate(oChangedProperties) {
-            if (oChangedProperties.hasOwnProperty("popupTitle")){
+            if (oChangedProperties.hasOwnProperty("popupTitle")) {
                 this._popupTitle = oChangedProperties.popupTitle;
             }
-            if (oChangedProperties.hasOwnProperty("pdfUrl")){
+            if (oChangedProperties.hasOwnProperty("pdfUrl")) {
                 this._pdfUrl = oChangedProperties.pdfUrl;
             }
             if (this._firstConnection) {
@@ -100,20 +100,20 @@
 
 
         set pdfUrl(newPdfUrl) {
-			this._pdfUrl = newPdfUrl;
-		}
+            this._pdfUrl = newPdfUrl;
+        }
 
-		get pdfUrl() {
-			return this._pdfUrl;
-		}
+        get pdfUrl() {
+            return this._pdfUrl;
+        }
 
-		set popupTitle(newPopupTitle) {
-			this._popupTitle = newPopupTitle;
-		}
+        set popupTitle(newPopupTitle) {
+            this._popupTitle = newPopupTitle;
+        }
 
-		get popupTitle() {
-			return this._popupTitle;
-		}
+        get popupTitle() {
+            return this._popupTitle;
+        }
 
     });
 
@@ -122,11 +122,15 @@
         var that_ = that;
         this._firstConnection = false;
 
-        if (that_.children.length === 0){
-            let content = document.createElement('div');
-            content.slot = "content";
-            that_.appendChild(content);
+        if (that_.children.length !== 0) {
+            return;
         }
+
+        let content = document.createElement('div');
+        content.slot = "content";
+        that_.appendChild(content);
+
+
 
         // that_._renderExportButton();
 
@@ -148,7 +152,8 @@
                 return Controller.extend("myView.Template", {
 
                     onInit: function () {
-                        this._oSACPDFViewerComponent = that;                        
+                        this._oSACPDFViewerComponent = that;
+                        that._oPdfController = this;
                         // if (that._firstConnection === 0) {
                         //     that._firstConnection = 1;
                         //     this._sValidPath = that._export_settings.pdf_url
@@ -176,7 +181,7 @@
                         console.log("onerror");
                     },
 
-                    onShowPopupLinkPress: function(){
+                    onShowPopupLinkPress: function () {
                         MessageToast.show("It works...");
                         this.dipslayPDFPopup();
                     },
@@ -186,24 +191,24 @@
                         oEvent.preventDefault();
                     },
 
-                    _getPdfSource: function(){
+                    _getPdfSource: function () {
                         var sPdfSource = this._oSACPDFViewerComponent.pdfUrl;
-                        if (!sPdfSource){
+                        if (!sPdfSource) {
                             sPdfSource = "https://schrader.promos-consult.de:8408/sap/opu/odata/prohan/WFS4_SRV/ArchiveLinkDocuments(ProcessId=guid'e22155d5-7207-1eeb-bea0-607b6c761ffe',AttachKey='ARCHIVELINK%20DOCUMENT%2FPROMOS%2FTPE22155D572071EEBBEA0607B6C761FFE%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20T9E22155D572071EDBBEBE4F91EA1EFDF7')/$value";
                         }
                         return sPdfSource;
                     },
 
-                    _getPopupTitle: function(){
+                    _getPopupTitle: function () {
                         var sPopupTitle = this._oSACPDFViewerComponent.popupTitle;
-                        if (!sPopupTitle){
-                            sPopupTitle = "KPI Steckbrief";                            
+                        if (!sPopupTitle) {
+                            sPopupTitle = "KPI Steckbrief";
                         }
                         return sPopupTitle;
                     },
 
-                    dipslayPDFPopup: function(){
-                        if (!this._oPDFViewer){
+                    dipslayPDFPopup: function () {
+                        if (!this._oPDFViewer) {
                             this._oPDFViewer = new PDFViewer();
                             this._oPDFViewer.attachSourceValidationFailed(this.onPDFSourceValidationFailed, this);
                         }
@@ -214,9 +219,9 @@
                         this._oPDFViewer.setTitle(this._getPopupTitle());
                         this._oPDFViewer.open();
                         // this._setForPopup();
-                    }, 
+                    },
 
-                    onPDFSourceValidationFailed: function(oEvent){
+                    onPDFSourceValidationFailed: function (oEvent) {
                         oEvent.preventDefault();
                     }
                 });
