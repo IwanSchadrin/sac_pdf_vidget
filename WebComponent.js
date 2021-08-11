@@ -144,8 +144,7 @@
                 return Controller.extend("myView.Template", {
 
                     onInit: function () {
-                        var sDummy = _that,
-                            sDummy2 = that;
+                        this._oSACPDFViewerComponent = that;                        
                         // if (that._firstConnection === 0) {
                         //     that._firstConnection = 1;
                         //     this._sValidPath = that._export_settings.pdf_url
