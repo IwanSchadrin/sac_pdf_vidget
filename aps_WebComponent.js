@@ -7,7 +7,7 @@
 				<table>
 					<tr>
 						<td>PDF URL</td>
-						<td><textarea id="pdfUrl"  rows="5" cols="33"></td>
+						<td><textarea id="pdfUrl"  rows="5" cols="33"></textarea></td>
 					</tr>
 					<tr>
 						<td>Pop-Up Title</td>						
