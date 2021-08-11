@@ -14,7 +14,7 @@
 		</form>
 	`;
 
-	class HelloWorldAps extends HTMLElement {
+	class PDFViewerAps extends HTMLElement {
 		constructor() {
 			super();
 			this._shadowRoot = this.attachShadow({mode: "open"});
@@ -42,5 +42,5 @@
 		// }
 	}
 
-customElements.define("com-openpromos-sac-pdf-vidget-aps", PDFViewer);
+customElements.define("com-openpromos-sac-pdf-vidget-aps", PDFViewerAps);
 })();
