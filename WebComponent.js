@@ -61,8 +61,8 @@
         connectedCallback() {
             this._firstConnection = true;
 
-            //loadthis(this);
-            this.redraw();
+            loadthis(this);
+            //this.redraw();
         }
 
         //Fired when the widget is removed from the html DOM of the page (e.g. by hide)
@@ -84,8 +84,7 @@
                 this._pdfUrl = oChangedProperties.pdfUrl;
             }
             if (this._firstConnection) {
-                //loadthis(this);
-                this.redraw();
+                loadthis(this);                
             }
         }
 
@@ -125,120 +124,6 @@
             }
         }
 
-        redraw() {
-            var that_ = this;
-
-            if (this._oContent) {
-                this._oContent.parentNode.removeChild(this._oContent);
-            }
-
-            this._oContent = document.createElement('div');
-            this._oContent.slot = "content";
-            that_.appendChild(this._oContent);
-
-
-            sap.ui.getCore().attachInit(function () {
-                "use strict";
-
-                //### Controller ###
-                sap.ui.define([
-                    "jquery.sap.global",
-                    "sap/ui/core/mvc/Controller",
-                    "sap/ui/model/json/JSONModel",
-                    "sap/m/MessageToast",
-                    "sap/ui/core/library",
-                    "sap/ui/core/Core",
-                    "sap/m/PDFViewer"
-                ], function (jQuery, Controller, JSONModel, MessageToast, coreLibrary, Core, PDFViewer) {
-                    "use strict";
-
-                    return Controller.extend("myView.Template", {
-
-                        onInit: function () {
-                            this._oSACPDFViewerComponent = that_;
-                            that_._oViewController = this;
-                            // if (that._firstConnection === 0) {
-                            //     that._firstConnection = 1;
-                            //     this._sValidPath = that._export_settings.pdf_url
-                            //     console.log(this._sValidPath);
-
-                            //     this._oModel = new JSONModel({
-                            //         Source: this._sValidPath,
-                            //         Title: that._export_settings.title,
-                            //         Height: that._export_settings.height
-                            //     });
-
-                            //     this.getView().setModel(this._oModel);
-                            //     sap.ui.getCore().setModel(this._oModel, "core");
-                            // } else {
-                            //     var oModel = sap.ui.getCore().getModel("core");
-                            //     oModel.setProperty("/Source", that._export_settings.pdf_url);
-                            // }
-                        },
-
-                        onloaded: function () {
-                            console.log("onloaded");
-                        },
-
-                        onerror: function () {
-                            console.log("onerror");
-                        },
-
-                        onShowPopupLinkPress: function () {
-                            MessageToast.show("It works...");
-                            this.dipslayPDFPopup();
-                        },
-
-                        onsourceValidationFailed: function (oEvent) {
-                            console.log("onsourceValidationFailed");
-                            oEvent.preventDefault();
-                        },
-
-                        _getPdfSource: function () {
-                            var sPdfSource = this._oSACPDFViewerComponent.pdfUrl;
-                            if (!sPdfSource) {
-                                sPdfSource = "https://schrader.promos-consult.de:8408/sap/opu/odata/prohan/WFS4_SRV/ArchiveLinkDocuments(ProcessId=guid'e22155d5-7207-1eeb-bea0-607b6c761ffe',AttachKey='ARCHIVELINK%20DOCUMENT%2FPROMOS%2FTPE22155D572071EEBBEA0607B6C761FFE%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20T9E22155D572071EDBBEBE4F91EA1EFDF7')/$value";
-                            }
-                            return sPdfSource;
-                        },
-
-                        _getPopupTitle: function () {
-                            var sPopupTitle = this._oSACPDFViewerComponent.popupTitle;
-                            if (!sPopupTitle) {
-                                sPopupTitle = "KPI Steckbrief";
-                            }
-                            return sPopupTitle;
-                        },
-
-                        dipslayPDFPopup: function () {
-                            if (!this._oPDFViewer) {
-                                this._oPDFViewer = new PDFViewer();
-                                this._oPDFViewer.attachSourceValidationFailed(this.onPDFSourceValidationFailed, this);
-                            }
-
-                            jQuery.sap.addUrlWhitelist("https", "schrader.promos-consult.de");
-                            this._oPDFViewer.setSource(this._getPdfSource());
-
-                            this._oPDFViewer.setTitle(this._getPopupTitle());
-                            this._oPDFViewer.open();
-                            // this._setForPopup();
-                        },
-
-                        onPDFSourceValidationFailed: function (oEvent) {
-                            oEvent.preventDefault();
-                        }
-                    });
-                });
-
-                //### THE APP: place the XMLView somewhere into DOM ###
-                var oView = sap.ui.xmlview({
-                    viewContent: jQuery(_shadowRoot.getElementById(_id + "_oView")).html(),
-                });
-
-                oView.placeAt(content);
-            });
-        }
-
     });
 
     // UTILS
@@ -246,9 +131,15 @@
         var that_ = that;
         this._firstConnection = false;
 
-        let content = document.createElement('div');
-        content.slot = "content";
-        that_.appendChild(content);
+        if (!that._content){
+            that_._content = document.createElement('div');
+            that_._content.slot = "content";
+            that_.appendChild(that_._content);
+        }
+
+        // let content = document.createElement('div');
+        // content.slot = "content";
+        // that_.appendChild(content);
 
 
         // that_._renderExportButton();
