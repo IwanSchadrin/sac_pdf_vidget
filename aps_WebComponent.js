@@ -7,11 +7,11 @@
 				<table>
 					<tr>
 						<td>PDF URL</td>
-						<td><textarea id="pdfUrl" type="string" rows="5" cols="33"></td>
+						<td><textarea id="pdfUrl"  rows="5" cols="33"></td>
 					</tr>
 					<tr>
 						<td>Pop-Up Title</td>						
-						<td><input id="popupTitle"></td>
+						<td><input id="popupTitle" type="string"></td>
 					</tr>
 				</table>
 			</fieldset>
